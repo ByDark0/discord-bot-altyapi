@@ -43,4 +43,3 @@ exports.help = {
   usage: 'kanalkonusudeğiş yeni kanal ismi'
 };
 
-RealCode dan alıntıdır oraya da gidin #kod-aldığımız-yerler 
