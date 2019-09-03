@@ -4,6 +4,15 @@ const ayarlar = require('./ayarlar.json');
 const chalk = require('chalk');
 const fs = require('fs');
 const moment = require('moment');
+const express = require('express')
+const http = require('https')
+const app = express(); 
+app.get("/", (request, response) =>{ 
+console.log(Date.now() + " Ping tamamdır.");
+	response.sendStatus(200); });
+app.listen(process.env.PORT);
+setInterval(() => { http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+		  }, 280000);
 require('./util/eventLoader')(client);
 
 var prefix = ayarlar.prefix;
@@ -106,5 +115,11 @@ client.on('warn', e => {
 client.on('error', e => {
   console.log(chalk.bgRed(e.replace(regToken, 'that was redacted')));
 });
-
+client.on('guildMemberAdd', async member => {
+  
+  let tag = await db.fetch(`technotag_${member.guild.id}`);
+  let tagsekil;
+  if (tag == null) tagsekil = member.setNickname(`${member.user.username}`)
+  else tagsekil = member.setNickname(`${tag} ${member.user.username}`)
+});
 client.login(ayarlar.token);
